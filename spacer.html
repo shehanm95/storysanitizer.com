@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to HTML Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            flex: 1;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #copyBtn {
+            background-color: #28a745;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        #copyBtn:hover {
+            background-color: #218838;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Text to HTML Converter</h1>
+        <textarea id="inputText" placeholder="Paste your text here..."></textarea>
+        <div class="button-container">
+            <button onclick="convertText()">Convert</button>
+            <button id="copyBtn" onclick="copyToClipboard()" disabled>Copy to Clipboard</button>
+        </div>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        let convertedText = '';
+
+        function convertText() {
+            // Get the input text
+            const input = document.getElementById('inputText').value;
+
+            // Replace line breaks with <br/>
+            convertedText = input.replace(/\n/g, '<br/><br/>');
+
+            // Display the result
+            document.getElementById('output').textContent = convertedText;
+
+            // Enable the copy button
+            document.getElementById('copyBtn').disabled = false;
+        }
+
+        function copyToClipboard() {
+            if (convertedText) {
+                // Copy the converted text to clipboard
+                navigator.clipboard.writeText(convertedText).then(() => {
+
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    alert('Failed to copy text.');
+                });
+            } else {
+                alert('Nothing to copy! Please convert some text first.');
+            }
+        }
+    </script>
+</body>
+
+</html>
