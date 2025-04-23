@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Sanitizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">Story Sanitizer</div>
+
+    <!-- Main Content Area -->
+    <div class="container">
+
+        <!-- Left Side - Story Input -->
+        <div class="box">
+            <div class="header">
+                <h3>Enter Your Story</h3>
+                <div class="buttons">
+                    <button class="sanitize-btn" onclick="sanitize()">Make Spaces</button>
+                    <button class="clear-btn" onclick="clearText()">Clear</button>
+
+                </div>
+            </div>
+
+
+            <textarea id="story"></textarea>
+        </div>
+
+        <!-- Right Side - Sanitized Story Output -->
+        <div class="box">
+            <div class="header">
+                <h3>Sanitized Story</h3>
+                <div class="buttons">
+                    <button class="copy-btn" onclick="copyText()">Copy Text</button>
+
+                </div>
+            </div>
+
+            <p id="finalText">Your sanitized text will appear here...</p>
+        </div>
+
+    </div>
+
+
+    <!-- Buttons Section -->
+    <div class="buttons">
+        <a class="copy-btn" href="spacer.html">Open Spacer</a>
+
+    </div>
+</body>
+
+<script>
+    const replacements = {
+  
+    };
+
+    // Apply replacements
+
+
+    function clearText() {
+        document.getElementById("story").value = "";
+    }
+    function sanitize() {
+        let story = document.getElementById("story").value;
+
+        if (story == "") {
+            alert("No Story to convert...");
+            return; // Stop execution if there's no text
+        }
+        let finalText = document.getElementById("finalText")
+        for (const [original, modified] of Object.entries(replacements)) {
+            story = story.replaceAll(original, modified);
+        }
+        story = story.replace(/\n/g, "<br>");
+        finalText.innerHTML = story;
+    }
+
+
+
+
+
+    function copyText() {
+        let finalText = document.getElementById("finalText").innerText;
+
+        if (finalText == "" || finalText == "Your sanitized text will appear here...") {
+            alert("No converted text to copy...");
+            return; // Stop execution if there's no text
+        }
+
+        navigator.clipboard.writeText(finalText).then(() => {
+            return navigator.clipboard.readText(); // Read the clipboard content
+        }).then((clipboardText) => {
+            console.log("Clipboard contains:", clipboardText);
+
+        }).catch(err => {
+            console.error("Clipboard operation failed:", err);
+        });
+    }
+
+</script>
+
+</html>
